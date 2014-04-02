@@ -177,7 +177,8 @@ class Curl {
         $response = curl_exec($this->request);
         
         if ($response) {
-            $response = new CurlResponse($response);
+            $info = $this->get_request_options();
+            $response = new CurlResponse($response, $info);
         } else {
             $this->error = curl_errno($this->request).' - '.curl_error($this->request);
         }
@@ -253,4 +254,14 @@ class Curl {
         }
     }
 
+    /**
+     * Returns an associative array of curl options
+     * currently configured.
+     *
+     * @return array Associative array of curl options
+     */
+    function get_request_options() {
+        return curl_getinfo( $this->request );
+    }
+    
 }

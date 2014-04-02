@@ -34,7 +34,7 @@ class CurlResponse {
      *
      * @param string $response
     **/
-    function __construct($response) {
+    function __construct($response, $info) {
         # Headers regex
         $pattern = '#HTTP/\d\.\d.*?$.*?\r\n\r\n#ims';
         
@@ -58,6 +58,9 @@ class CurlResponse {
             preg_match('#(.*?)\:\s(.*)#', $header, $matches);
             $this->headers[$matches[1]] = $matches[2];
         }
+        
+        # Pass along the request information
+        $this->info = $info;
     }
     
     /**
